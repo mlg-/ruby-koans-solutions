@@ -13,21 +13,17 @@
 #   about_triangle_project_2.rb
 #
 def triangle(a, b, c)
-  if a == b && b == c && a == c
+  if [a, b, c].any? { |side| side <= 0 }
+    raise TriangleError
+  elsif (a + b <= c) || (c + b <= a) || (a + c <= b)
+    raise TriangleError
+  elsif a == b && b == c && a == c
     return :equilateral
-  end
+  elsif a == b || b == c || a == c
+    return :isosceles
   else
-    truth = []
-    truth << true if (a == b)
-    truth << true if (b == c)
-    truth << true if (a == c)
-    if truth.empty?
-      return :scalene
-    else
-      if truth.size == 1
-        return :isosceles
-      end
-    end
+    return :scalene
+  end
 end
 
 # Error class used in part 2.  No need to change this code.
